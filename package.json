@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "postinstall": "npx puppeteer browsers install chrome",
+    "postinstall": "npx puppeteer-core install chrome-aws-lambda",
     "start": "node server.js"
   },
   "dependencies": {
+    "chrome-aws-lambda": "^10.1.0",
+    "cors": "^2.8.5",
     "express": "^4.21.1",
     "helmet": "^8.0.0",
-    "puppeteer": "^23.5.2",
-    "cors": "^2.8.5"
+    "puppeteer-core": "^23.6.0"
   }
 }

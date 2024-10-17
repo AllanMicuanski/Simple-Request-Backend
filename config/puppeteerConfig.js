@@ -1,9 +1,7 @@
-const puppeteer = require("puppeteer");
+const chromium = require("chrome-aws-lambda");
 
 module.exports = {
-  executablePath:
-    "/opt/render/.cache/puppeteer/chrome/linux-130.0.6723.58/chrome-linux64/chrome",
-  args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  args: [...chromium.args, "--no-sandbox", "--disable-setuid-sandbox"],
   headless: true,
-  executablePath: puppeteer.executablePath(),
+  executablePath: await chromium.executablePath,
 };

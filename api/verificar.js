@@ -1,5 +1,5 @@
-const puppeteer = require("puppeteer");
-const puppeteerConfig = require("../config/puppeteerConfig");
+const puppeteer = require("puppeteer-core");
+const chromium = require("chrome-aws-lambda");
 
 module.exports = async (req, res) => {
   const { url } = req.query;
@@ -11,7 +11,24 @@ module.exports = async (req, res) => {
   console.log("Iniciando verificação para a URL:", url);
 
   try {
-    const browser = await puppeteer.launch(puppeteerConfig);
+    let browser;
+
+    // Verifica se está no ambiente de produção (Render) ou local
+    if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+      // Ambiente serverless (Render)
+      browser = await puppeteer.launch({
+        args: [...chromium.args, "--no-sandbox", "--disable-setuid-sandbox"],
+        executablePath: await chromium.executablePath,
+        headless: true,
+      });
+    } else {
+      // Ambiente local
+      browser = await puppeteer.launch({
+        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+        executablePath: "/usr/bin/google-chrome-stable", // Caminho para o Chrome local
+        headless: true,
+      });
+    }
 
     console.log("Navegador Puppeteer iniciado");
 
