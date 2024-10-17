@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer");
-const puppeteerConfig = require("../config/puppeteerConfig"); // Configurações separadas
+const puppeteerConfig = require("../config/puppeteerConfig");
 
 module.exports = async (req, res) => {
   const { url } = req.query;
@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
   console.log("Iniciando verificação para a URL:", url);
 
   try {
-    const browser = await puppeteer.launch(puppeteerConfig); // Usando as configs do Puppeteer
+    const browser = await puppeteer.launch(puppeteerConfig);
 
     console.log("Navegador Puppeteer iniciado");
 
